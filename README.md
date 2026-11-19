@@ -7,9 +7,9 @@ Off-chain **ML-DSA-65 (FIPS 204)** authorization powered by [ForgeLattice](https
 [![Verified Contract](https://img.shields.io/badge/Blockscout_Verified-0x260a...2672-2EA44F)](https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672)
 [![Core Engine](https://img.shields.io/badge/Crypto_Core-ForgeLattice_ML--DSA--65-6F42C1)](https://github.com/Deeptiman/forgelattice)
 
-> **Live Explorer & On-Chain Proof:** Inspect the deployed [`PaymentGate.sol`](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F) and verified `tUSD8` settlement transaction [`0xf794...aded`](https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded) directly on the **[QDay Aevum Block Explorer](https://explorer-test.qday.info/)**
+> **Live Explorer & On-Chain Proof:** Inspect the deployed [`PaymentGate.sol`](https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672) and verified `tUSD8` settlement transaction [`0xc450...3aab`](https://explorer-test.qday.info/tx/0xc450ddfe63f130a454f4991a537b50557f543944e2cc86b181d3549417503aab) directly on the **[QDay Aevum Block Explorer](https://explorer-test.qday.info/)**.
 >
-> **Live Blockscout-Verified Deployment:** Inspect the source-verified [`PaymentGate.sol`](https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672) contract and `tUSD8` settlement transaction [`0x260a...2672`](https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672?tab=contract) directly on the **[QDay Aevum Block Explorer](https://explorer-test.qday.info/)**.
+> **Live Blockscout-Verified Source:** Inspect the verified Solidity source code and ABI for [`PaymentGate.sol`](https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672?tab=contract) directly on the **[QDay Aevum Block Explorer](https://explorer-test.qday.info/)**.
 
 ## Overview
 
