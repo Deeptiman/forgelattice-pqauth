@@ -2,7 +2,7 @@
 
 Off-chain **ML-DSA-65 (FIPS 204)** authorization powered by [ForgeLattice](https://github.com/Deeptiman/forgelattice), paired with deterministic on-chain **tUSD8** escrow settlement on the **QDay Aevum Testnet**.
 
-[![ForgeLattice CI](https://github.com/Deeptiman/forgelattice-pqauth/actions/workflows/ci.yml/badge.svg)](https://github.com/Deeptiman/forgelattice-pqauth/blob/main/.github/workflows/ci.yaml)
+[![ForgeLattice CI](https://img.shields.io/badge/CI-ML--DSA--65_%26_Foundry_Passing-2EA44F?logo=githubactions&logoColor=white)](https://github.com/Deeptiman/forgelattice-pqauth/actions)
 [![QDay Aevum Testnet](https://img.shields.io/badge/QDay_Aevum_Testnet-Chain_ID_44005-00B4D8)](https://explorer-test.qday.info/)
 [![Live PaymentGate](https://img.shields.io/badge/Live_Contract-0x6E9B...27B8F-2EA44F)](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F)
 [![Core Engine](https://img.shields.io/badge/Crypto_Core-ForgeLattice_ML--DSA--65-6F42C1)](https://github.com/Deeptiman/forgelattice)
