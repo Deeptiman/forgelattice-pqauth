@@ -53,19 +53,60 @@ flowchart TD
     Gate -->|5. Transfer tUSD8 to Payee| Token
 ```
 
-## Live QDay Aevum Testnet Deployment
+<h2>Live QDay Aevum Testnet Deployment</h2>
 
-- **Network:** QDay Aevum Testnet (`Chain ID: 44005`)
-- **RPC Endpoint:** https://rpc-test.qday.info
-- **Block Explorer:** https://explorer-test.qday.info
+<ul>
+  <li><strong>Network:</strong> QDay Aevum Testnet (<code>Chain ID: 44005</code>)</li>
+  <li><strong>RPC Endpoint:</strong> <a href="https://rpc-test.qday.info">https://rpc-test.qday.info</a></li>
+  <li><strong>Block Explorer:</strong> <a href="https://explorer-test.qday.info">https://explorer-test.qday.info</a></li>
+</ul>
 
-| Component / Stage | Live Explorer Link |
-| :--- | :--- |
-| **tUSD8 Token** *(ERC-20, 6 decimals — `100` units = `0.000100 tUSD8`)* | https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483 |
-| **PaymentGate Contract** | https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F |
-| **Contract Deployment Tx** | https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09 |
-| **Escrow Funding Tx** *(`100` tUSD8)* | https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e |
-| **Verified Settlement Tx** *(`release`)* | https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Component / Stage</th>
+      <th align="left">Address / Transaction Hash</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>tUSD8 Token</strong> <em>(ERC-20, 6 decimals — <code>100</code> units = <code>0.000100 tUSD8</code>)</em></td>
+      <td><code>0x456569838f1d43009A91ebA4263147Afd7233483</code></td>
+    </tr>
+    <tr>
+      <td colspan="2"><a href="https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483">https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483</a></td>
+    </tr>
+    <tr>
+      <td><strong>PaymentGate Contract</strong></td>
+      <td><code>0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F</code></td>
+    </tr>
+    <tr>
+      <td colspan="2"><a href="https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F">https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F</a></td>
+    </tr>
+    <tr>
+      <td><strong>Contract Deployment Tx</strong></td>
+      <td><code>0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09</code></td>
+    </tr>
+    <tr>
+      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09">https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09</a></td>
+    </tr>
+    <tr>
+      <td><strong>Escrow Funding Tx</strong> <em>(<code>100</code> tUSD8)</em></td>
+      <td><code>0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e</code></td>
+    </tr>
+    <tr>
+      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e">https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e</a></td>
+    </tr>
+    <tr>
+      <td><strong>Verified Settlement Tx</strong> <em>(<code>release</code>)</em></td>
+      <td><code>0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded</code></td>
+    </tr>
+    <tr>
+      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded">https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded</a></td>
+    </tr>
+  </tbody>
+</table>
+
 
 ## Project Structure
 
