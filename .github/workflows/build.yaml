@@ -27,6 +27,8 @@ jobs:
 
       - name: Build ForgeLattice CLI & Verify FIPS 204 ML-DSA-65 Flow
         run: |
+          go mod download
+          go mod vendor
           go build -o pqauth main.go
           SEED="0x$(openssl rand -hex 32)"
           ./pqauth keygen --seed "$SEED" --level 65 > keypair.json
