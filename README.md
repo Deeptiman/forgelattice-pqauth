@@ -4,7 +4,7 @@ Off-chain **ML-DSA-65 (FIPS 204)** authorization powered by [ForgeLattice](https
 
 [![ForgeLattice CI](https://img.shields.io/badge/CI-ML--DSA--65_%26_Foundry_Passing-2EA44F?logo=githubactions&logoColor=white)](https://github.com/Deeptiman/forgelattice-pqauth/actions)
 [![QDay Aevum Testnet](https://img.shields.io/badge/QDay_Aevum_Testnet-Chain_ID_44005-00B4D8)](https://explorer-test.qday.info/)
-[![Live PaymentGate](https://img.shields.io/badge/Live_Contract-0x6E9B...27B8F-2EA44F)](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F)
+[![Verified Contract](https://img.shields.io/badge/Blockscout_Verified-0x260a...2672-2EA44F)](https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672)
 [![Core Engine](https://img.shields.io/badge/Crypto_Core-ForgeLattice_ML--DSA--65-6F42C1)](https://github.com/Deeptiman/forgelattice)
 
 > **Live Explorer & On-Chain Proof:** Inspect the deployed [`PaymentGate.sol`](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F) and verified `tUSD8` settlement transaction [`0xf794...aded`](https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded) directly on the **[QDay Aevum Block Explorer](https://explorer-test.qday.info/)**.
@@ -70,43 +70,42 @@ flowchart TD
   </thead>
   <tbody>
     <tr>
-      <td><strong>tUSD8 Token</strong> <em>(ERC-20, 6 decimals — <code>100</code> units = <code>0.000100 tUSD8</code>)</em></td>
+      <td><strong>tUSD8 Token</strong> <em>(ERC-20, 6 decimals — <code>100</code> base units = <code>0.000100</code> tUSD8)</em></td>
       <td><code>0x456569838f1d43009A91ebA4263147Afd7233483</code></td>
     </tr>
     <tr>
       <td colspan="2"><a href="https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483">https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483</a></td>
     </tr>
     <tr>
-      <td><strong>PaymentGate Contract</strong></td>
-      <td><code>0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F</code></td>
+      <td><strong>PaymentGate Contract</strong> <em>(Blockscout Source-Verified)</em></td>
+      <td><code>0x260a2b808b8e23fe21eaAc6373a681358d432672</code></td>
     </tr>
     <tr>
-      <td colspan="2"><a href="https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F">https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F</a></td>
+      <td colspan="2"><a href="https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672">https://explorer-test.qday.info/address/0x260a2b808b8e23fe21eaAc6373a681358d432672</a></td>
     </tr>
     <tr>
       <td><strong>Contract Deployment Tx</strong></td>
-      <td><code>0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09</code></td>
+      <td><code>0xae89b25e3727edacad192caaa186c1c9835b528bfa593719c3ef34e0a2fce663</code></td>
     </tr>
     <tr>
-      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09">https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09</a></td>
+      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0xae89b25e3727edacad192caaa186c1c9835b528bfa593719c3ef34e0a2fce663">https://explorer-test.qday.info/tx/0xae89b25e3727edacad192caaa186c1c9835b528bfa593719c3ef34e0a2fce663</a></td>
     </tr>
     <tr>
-      <td><strong>Escrow Funding Tx</strong> <em>(<code>100</code> tUSD8)</em></td>
-      <td><code>0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e</code></td>
+      <td><strong>Escrow Funding Tx</strong> <em>(<code>100</code> base units / <code>0.000100</code> tUSD8)</em></td>
+      <td><code>0xcc02051146f71da25e7f480aa1fc5524475f244eb6d906d0d06d5dff1d0e1f76</code></td>
     </tr>
     <tr>
-      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e">https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e</a></td>
+      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0xcc02051146f71da25e7f480aa1fc5524475f244eb6d906d0d06d5dff1d0e1f76">https://explorer-test.qday.info/tx/0xcc02051146f71da25e7f480aa1fc5524475f244eb6d906d0d06d5dff1d0e1f76</a></td>
     </tr>
     <tr>
-      <td><strong>Verified Settlement Tx</strong> <em>(<code>release</code>)</em></td>
-      <td><code>0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded</code></td>
+      <td><strong>Verified Settlement Tx</strong> <em>(<code>release</code>, Nonce <code>6</code>)</em></td>
+      <td><code>0xc450ddfe63f130a454f4991a537b50557f543944e2cc86b181d3549417503aab</code></td>
     </tr>
     <tr>
-      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded">https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded</a></td>
+      <td colspan="2"><a href="https://explorer-test.qday.info/tx/0xc450ddfe63f130a454f4991a537b50557f543944e2cc86b181d3549417503aab">https://explorer-test.qday.info/tx/0xc450ddfe63f130a454f4991a537b50557f543944e2cc86b181d3549417503aab</a></td>
     </tr>
   </tbody>
 </table>
-
 
 ## Project Structure
 
@@ -199,21 +198,20 @@ make demo
 
 | Command | Description |
 | :--- | :--- |
-| `make help` | Show all available workflow commands |
-| `make demo` | Run the full 8-stage end-to-end demo on QDay Aevum Testnet |
-| `make build` | Compile the `pqauth` Go binary and `PaymentGate.sol` |
-| `make test` | Run Foundry unit tests (`contracts/test/PaymentGate.t.sol`) |
-| `make keygen` | Generate a fresh `ML-DSA-65` keypair into `keypair.json` |
-| `make deploy` | Deploy `PaymentGate.sol` bound to the generated public key |
-| `make fund` | Transfer `AMOUNT` of `tUSD8` base units into `PaymentGate` escrow |
-| `make sign` | Query on-chain `computeAuthHash()` and sign into `sig.json` |
-| `make verify` | Run off-chain `ML-DSA-65` verification against on-chain `authHash` |
-| `make settle` | Enforce off-chain verification gate, then execute `PaymentGate.release()` |
-| `make status` | Inspect escrow balance, payee balance, `authHash`, and replay lock |
-| `make tamper-test` | Verify that a 1-byte signature mutation is rejected off-chain (`0` gas) |
-| `make replay-test` | Verify that re-submitting a used nonce reverts with `AuthAlreadyUsed` |
-| `make run-payment NONCE=2` | Execute a subsequent payment cycle on an existing `PAYMENT_GATE` |
-| `make clean` | Remove compiled binaries and Foundry build cache |
+| `make demo` | Full end-to-end pipeline: `keygen` → `deploy` → `verify-contract` → `fund` → `sign` → `tamper-test` → `settle` → `status` → `replay-test` |
+| `make build` | Compile the ForgeLattice Go CLI (`pqauth`) and `PaymentGate.sol` via Foundry |
+| `make keygen` | Generate a NIST FIPS 204 `ML-DSA-65` keypair (`1,952B` PK, `4,032B` SK) into `keypair.json` |
+| `make deploy` | Deploy `PaymentGate.sol` to QDay Aevum Testnet (`Chain ID: 44005`) |
+| `make verify-contract` | Verify `PaymentGate.sol` source code and constructor ABI on QDay Aevum Blockscout Explorer |
+| `make fund` | Transfer `AMOUNT` `tUSD8` base units into `PaymentGate` escrow |
+| `make sign` | Fetch on-chain `computeAuthHash()` and produce a `3,309B` `ML-DSA-65` signature in `sig.json` |
+| `make tamper-test` | Flip 1 byte in `sig.json` and prove off-chain gate rejection with `0` gas spent |
+| `make verify` | Verify `sig.json` off-chain against `keypair.json` and on-chain `authHash` |
+| `make settle` | Run off-chain `verify` gate and execute `PaymentGate.release()` on-chain |
+| `make replay-test` | Re-submit a settled signature and verify on-chain `AuthAlreadyUsed` revert |
+| `make status` | Query escrow balance, payee balance, and on-chain replay lock state |
+| `make run-payment` | Execute a full payment cycle on an existing contract (`make run-payment AMOUNT=500 NONCE=7`) |
+| `make test` | Run Foundry Solidity unit test suite (`PaymentGate.t.sol`) |
 
 ## Security Invariants
 

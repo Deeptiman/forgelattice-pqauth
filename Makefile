@@ -12,7 +12,7 @@ BLUE   := \033[1;34m
 BOLD   := \033[1m
 RESET  := \033[0m
 
-.PHONY: help check-env build keygen deploy fund sign verify settle tamper-test replay-test status demo run-payment clean
+.PHONY: help check-env build keygen deploy verify-contract fund sign verify settle tamper-test replay-test status demo run-payment clean
 
 help: ## Show available ForgeLattice + QDay Aevum workflow commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -80,6 +80,27 @@ deploy: check-env ## Deploy PaymentGate.sol to QDay Aevum Testnet using keypair.
 		--private-key "$$SETTLER_PK" \
 		--broadcast \
 		--constructor-args "$$TUSD8_ADDR" "$$SETTLER_ADDR" "$$PQ_PUB_KEY"
+
+verify-contract: check-env ## Verify PaymentGate.sol source & ABI on QDay Aevum Blockscout Explorer
+	@set -a; source .env; set +a; \
+	: $${PAYMENT_GATE:?Set PAYMENT_GATE in .env first}; \
+	test -f keypair.json || (printf "$(RED)Error: keypair.json not found.$(RESET)\n" && exit 1); \
+	SETTLER_ADDR=$$(cast wallet address --private-key "$$SETTLER_PK"); \
+	PQ_PUB_KEY=$$(jq -r '.public_key' keypair.json); \
+	CONSTRUCTOR_ARGS=$$(cast abi-encode "constructor(address,address,bytes)" "$$TUSD8_ADDR" "$$SETTLER_ADDR" "$$PQ_PUB_KEY"); \
+	printf "$(CYAN)=== Verifying PaymentGate.sol on QDay Aevum Explorer ($$PAYMENT_GATE) ===$(RESET)\n"; \
+	if forge verify-contract \
+		--root contracts \
+		--chain-id 44005 \
+		--verifier blockscout \
+		--verifier-url https://explorer-test.qday.info/api \
+		--constructor-args "$$CONSTRUCTOR_ARGS" \
+		"$$PAYMENT_GATE" \
+		src/PaymentGate.sol:PaymentGate; then \
+		printf "$(GREEN)✓ Contract verified on Blockscout Explorer!$(RESET)\n"; \
+	else \
+		printf "$(YELLOW)⚠ Explorer verification skipped/pending (indexer delay or compiler match).$(RESET)\n"; \
+	fi
 
 fund: check-env ## Transfer $(AMOUNT) tUSD8 base units into PaymentGate escrow
 	@set -a; source .env; set +a; \
@@ -184,6 +205,9 @@ demo: check-env build ## Run complete end-to-end demo (keygen -> deploy -> fund 
 	test -n "$$GATE_ADDR" || (printf "$(RED)Failed to parse deployed address$(RESET)\n" && exit 1); \
 	grep -v '^PAYMENT_GATE=' .env > .env.tmp && mv .env.tmp .env; \
 	echo "PAYMENT_GATE=\"$$GATE_ADDR\"" >> .env; \
+	echo ""; \
+    sleep 3; \
+    $(MAKE) verify-contract; \
 	echo ""; \
 	$(MAKE) NONCE=1 fund; \
 	echo ""; \
