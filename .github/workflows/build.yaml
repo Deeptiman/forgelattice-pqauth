@@ -1,0 +1,62 @@
+name: ForgeLattice PQAuth CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-pqc-and-contracts:
+    name: ML-DSA-65 CLI & Foundry Contract Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Build ForgeLattice CLI & Verify FIPS 204 ML-DSA-65 Flow
+        run: |
+          go build -o pqauth main.go
+          SEED="0x$(openssl rand -hex 32)"
+          ./pqauth keygen --seed "$SEED" --level 65 > keypair.json
+
+          PK_LEN=$(jq -r '.pk_bytes' keypair.json)
+          SK_LEN=$(jq -r '.sk_bytes' keypair.json)
+          test "$PK_LEN" -eq 1952
+          test "$SK_LEN" -eq 4032
+
+          MSG="0x$(openssl rand -hex 32)"
+          PRIV=$(jq -r '.private_key' keypair.json)
+          PUB=$(jq -r '.public_key' keypair.json)
+
+          ./pqauth sign --privKey "$PRIV" --message "$MSG" --level 65 > sig.json
+          SIG=$(jq -r '.signature' sig.json)
+          SIG_LEN=$(jq -r '.sig_bytes' sig.json)
+          test "$SIG_LEN" -eq 3309
+
+          # Valid signature must pass
+          ./pqauth verify --pubKey "$PUB" --signature "$SIG" --message "$MSG" --level 65
+
+          # 1-byte tampered signature must fail
+          BAD_SIG="0x00${SIG:4}"
+          if ./pqauth verify --pubKey "$PUB" --signature "$BAD_SIG" --message "$MSG" --level 65; then
+            echo "Tampered signature unexpectedly passed"
+            exit 1
+          fi
+          rm -f keypair.json sig.json pqauth
+
+      - name: Build & Test PaymentGate.sol (Foundry)
+        run: |
+          forge build --root contracts
+          forge test --root contracts -vvv

@@ -1,0 +1,11 @@
+# Secrets & generated artifacts
+.env
+keypair.json
+sig.json
+pqauth
+
+# Foundry build artifacts
+contracts/out/
+contracts/cache/
+
+vendor/
