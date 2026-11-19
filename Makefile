@@ -18,10 +18,13 @@ help: ## Show available ForgeLattice + QDay Aevum workflow commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[1;36m%-14s\033[0m %s\n", $$1, $$2}'
 
+CLI_AMOUNT := $(AMOUNT)
+CLI_NONCE  := $(NONCE)
+
 check-env:
 	@if [ ! -f .env ]; then \
 		printf "$(YELLOW)=== First-Time Setup: Creating .env ===$(RESET)\n"; \
-		printf 'QDAY_RPC="https://rpc-test.qday.info"\nTUSD8_ADDR="0x456569838f1d43009A91ebA4263147Afd7233483"\nSETTLER_PK=""\nPAYEE="0x684fA44639Ca52D978B1C4A4f82Ddf6174987F87"\nAMOUNT="100"\nNONCE="1"\n' > .env; \
+		printf 'QDAY_RPC="https://rpc-test.qday.info"\nTUSD8_ADDR="0x456569838f1d43009A91ebA4263147Afd7233483"\nSETTLER_PK=""\nPAYEE=""\nAMOUNT="100"\nNONCE="1"\n' > .env; \
 	fi
 	@set -a; source .env; set +a; \
 	if [ -z "$$QDAY_RPC" ] || [[ "$$QDAY_RPC" == *"<"* ]]; then \
@@ -44,8 +47,14 @@ check-env:
 		grep -v '^PAYEE=' .env > .env.tmp && mv .env.tmp .env; \
 		echo "PAYEE=\"$$DEFAULT_PAYEE\"" >> .env; \
 	fi; \
-	if [ -z "$$AMOUNT" ]; then echo 'AMOUNT="100"' >> .env; fi; \
-	if [ -z "$$NONCE" ]; then echo 'NONCE="1"' >> .env; fi
+	if [ -z "$$AMOUNT" ] && [ -z "$(CLI_AMOUNT)" ]; then \
+		read -rp "Enter tUSD8 AMOUNT in base units [default: 100]: " AMT_INPUT; \
+		echo "AMOUNT=\"$${AMT_INPUT:-100}\"" >> .env; \
+	fi; \
+	if [ -z "$$NONCE" ] && [ -z "$(CLI_NONCE)" ]; then \
+		read -rp "Enter payment NONCE [default: 1]: " NONCE_INPUT; \
+		echo "NONCE=\"$${NONCE_INPUT:-1}\"" >> .env; \
+	fi
 
 build: ## Compile ForgeLattice Go CLI and PaymentGate.sol (Shanghai EVM)
 	@printf "$(CYAN)=== Building ForgeLattice CLI ($(BINARY)) ===$(RESET)\n"
