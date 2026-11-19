@@ -2,6 +2,13 @@
 
 Off-chain **ML-DSA-65 (FIPS 204)** authorization powered by [ForgeLattice](https://github.com/Deeptiman/forgelattice), paired with deterministic on-chain **tUSD8** escrow settlement on the **QDay Aevum Testnet**.
 
+[![ForgeLattice CI](https://github.com/Deeptiman/forgelattice-pqauth/actions/workflows/ci.yml/badge.svg)](https://github.com/Deeptiman/forgelattice-pqauth/blob/main/.github/workflows/ci.yaml)
+[![QDay Aevum Testnet](https://img.shields.io/badge/QDay_Aevum_Testnet-Chain_ID_44005-00B4D8)](https://explorer-test.qday.info/)
+[![Live PaymentGate](https://img.shields.io/badge/Live_Contract-0x6E9B...27B8F-2EA44F)](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F)
+[![Core Engine](https://img.shields.io/badge/Crypto_Core-ForgeLattice_ML--DSA--65-6F42C1)](https://github.com/Deeptiman/forgelattice)
+
+> **Live Explorer & On-Chain Proof:** Inspect the deployed [`PaymentGate.sol`](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F) and verified `tUSD8` settlement transaction [`0xf794...aded`](https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded) directly on the **[QDay Aevum Block Explorer](https://explorer-test.qday.info/)**.
+
 ## Overview
 
 Quantum computers threaten elliptic-curve signatures (`ECDSA`) used across standard EVM accounts. **ForgeLattice PQAuth** secures stablecoin disbursements on **QDay Aevum** using NIST-standardized **ML-DSA-65 (FIPS 204)** lattice cryptography:
