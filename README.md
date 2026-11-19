@@ -55,12 +55,17 @@ flowchart TD
 
 ## Live QDay Aevum Testnet Deployment
 
-- **Network:** QDay Aevum Testnet (`Chain ID: 44005`, RPC: `https://rpc-test.qday.info`)
-- **tUSD8 Token:** [`0x456569838f1d43009A91ebA4263147Afd7233483`](https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483) (ERC-20, 6 decimals — `100` base units = `0.000100 tUSD8`)
-- **PaymentGate Contract:** [`0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F`](https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F)
-- **Contract Deployment Tx:** [`0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09`](https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09)
-- **Escrow Funding Tx (`100` tUSD8):** [`0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e`](https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e)
-- **Verified Settlement Tx (`release`):** [`0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded`](https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded)
+- **Network:** QDay Aevum Testnet (`Chain ID: 44005`)
+- **RPC Endpoint:** https://rpc-test.qday.info
+- **Block Explorer:** https://explorer-test.qday.info
+
+| Component / Stage | Address / Tx Hash | Explorer URL |
+| :--- | :--- | :--- |
+| **tUSD8 Token** (ERC-20, 6 decimals — `100` base units = `0.000100 tUSD8`) | `0x456569838f1d43009A91ebA4263147Afd7233483` | https://explorer-test.qday.info/address/0x456569838f1d43009A91ebA4263147Afd7233483 |
+| **PaymentGate Contract** | `0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F` | https://explorer-test.qday.info/address/0x6E9B3D34f4273e880AAaE5eE4b51850643227B8F |
+| **Contract Deployment Tx** | `0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09` | https://explorer-test.qday.info/tx/0x0e5d1fc0f55723733e2c8ce185b466b60a1814947d8bb8923e26c0adfab6ea09 |
+| **Escrow Funding Tx** (`100` tUSD8) | `0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e` | https://explorer-test.qday.info/tx/0x4e6f54393e68f51770d00ab13a0a38d19d4d9fdd04e995c1b07397315948ee3e |
+| **Verified Settlement Tx** (`release`) | `0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded` | https://explorer-test.qday.info/tx/0xf794b7e1dbb06762145633815a32a277883bf67790c4cc47bd1de7ea67c2aded |
 
 ## Project Structure
 
