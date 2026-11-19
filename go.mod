@@ -3,7 +3,7 @@ module github.com/Deeptiman/forgelattice-pqauth
 go 1.24.3
 
 require (
-	github.com/Deeptiman/forgelattice/crypto v0.0.0-20260731225009-66b457180500
+	github.com/Deeptiman/forgelattice/crypto v0.0.0-20260731224818-766832490ceb
 	github.com/spf13/cobra v1.10.2
 )
 

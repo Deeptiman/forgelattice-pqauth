@@ -9,7 +9,7 @@ on:
 jobs:
   verify-pqc-and-contracts:
     name: ML-DSA-65 CLI & Foundry Contract Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout repository
