@@ -130,7 +130,7 @@ verify: check-env ## Verify sig.json off-chain against keypair.json and on-chain
 		"$$PAYEE" "$$AMOUNT" "$$NONCE" --rpc-url "$$QDAY_RPC"); \
 	PQ_PUB_KEY=$$(jq -r '.public_key' keypair.json); \
 	SIGNATURE=$$(jq -r '.signature' sig.json); \
-	printf "$(CYAN)=== [Stage 6] Off-Chain ForgeLattice ML-DSA-$(LEVEL) Verification ===$(RESET)\n"; \
+	printf "$(CYAN)=== [Stage 6] Verifying Valid Original ML-DSA-$(LEVEL) Verification (sig.json) ===$(RESET)\n"; \
 	./$(BINARY) verify --pubKey "$$PQ_PUB_KEY" --signature "$$SIGNATURE" --message "$$AUTH_HASH" --level $(LEVEL)
 
 settle: verify ## Verify off-chain and settle tUSD8 on-chain via PaymentGate.release()
