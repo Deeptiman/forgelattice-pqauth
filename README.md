@@ -1,4 +1,4 @@
-# ForgeLattice PQAuth — Post-Quantum tUSD8 Payment Gate on QDay Aevum
+# ForgeLattice Pay — Quantum-Safe tUSD8 Payments on QDay Aevum
 
 Off-chain **ML-DSA-65 (FIPS 204)** authorization powered by [ForgeLattice](https://github.com/Deeptiman/forgelattice), paired with deterministic on-chain **tUSD8** escrow settlement on the **QDay Aevum Testnet**.
 

@@ -21,40 +21,87 @@ help: ## Show available ForgeLattice + QDay Aevum workflow commands
 CLI_AMOUNT := $(AMOUNT)
 CLI_NONCE  := $(NONCE)
 
-check-env:
+check-env: ## Create .env if missing and prompt for SETTLER_PK, PAYEE, and AMOUNT (once per invocation)
 	@if [ ! -f .env ]; then \
 		printf "$(YELLOW)=== First-Time Setup: Creating .env ===$(RESET)\n"; \
-		printf 'QDAY_RPC="https://rpc-test.qday.info"\nTUSD8_ADDR="0x456569838f1d43009A91ebA4263147Afd7233483"\nSETTLER_PK=""\nPAYEE=""\nAMOUNT="100"\nNONCE="1"\n' > .env; \
+		if [ -f .env.example ]; then \
+			cp .env.example .env; \
+		else \
+			printf 'QDAY_RPC="https://rpc-test.qday.info"\nTUSD8_ADDR="0x456569838f1d43009A91ebA4263147Afd7233483"\nSETTLER_PK=""\nPAYEE=""\nAMOUNT="50"\nNONCE="1"\n' > .env; \
+		fi; \
 	fi
-	@set -a; source .env; set +a; \
-	if [ -z "$$QDAY_RPC" ] || [[ "$$QDAY_RPC" == *"<"* ]]; then \
-		grep -v '^QDAY_RPC=' .env > .env.tmp && mv .env.tmp .env; \
-		echo 'QDAY_RPC="https://rpc-test.qday.info"' >> .env; \
-	fi; \
-	if [ -z "$$TUSD8_ADDR" ] || [[ "$$TUSD8_ADDR" == *"<"* ]]; then \
-		grep -v '^TUSD8_ADDR=' .env > .env.tmp && mv .env.tmp .env; \
-		echo 'TUSD8_ADDR="0x456569838f1d43009A91ebA4263147Afd7233483"' >> .env; \
-	fi; \
-	if [ -z "$$SETTLER_PK" ] || [[ "$$SETTLER_PK" == *"<"* ]] || [[ "$$SETTLER_PK" == *"YOUR_"* ]]; then \
-		read -rsp "Enter SETTLER_PK (hidden input, saved to .env): " PK_INPUT; echo ""; \
-		test -n "$$PK_INPUT" || (printf "$(RED)Error: SETTLER_PK cannot be empty.$(RESET)\n" && exit 1); \
+	@set -a; . ./.env; set +a; \
+	PK=$$(printf '%s' "$$SETTLER_PK" | tr -d '[:space:]'); \
+	PK_LEN=$$(printf '%s' "$$PK" | wc -c | tr -d '[:space:]'); \
+	if [ -z "$$PK" ] || [ "$$PK_LEN" -lt 64 ]; then \
+		if [ ! -r /dev/tty ]; then \
+			printf "$(RED)Error: SETTLER_PK is missing in .env and no TTY is available.$(RESET)\n"; \
+			exit 1; \
+		fi; \
+		printf "$(CYAN)Enter your QDay Aevum test wallet private key (SETTLER_PK): $(RESET)" > /dev/tty; \
+		stty -echo < /dev/tty 2>/dev/null || true; \
+		IFS= read -r PK < /dev/tty; \
+		stty echo < /dev/tty 2>/dev/null || true; \
+		printf "\n" > /dev/tty; \
+		PK=$$(printf '%s' "$$PK" | tr -d '[:space:]'); \
+		case "$$PK" in 0x*) ;; *) PK="0x$$PK" ;; esac; \
+		PK_LEN=$$(printf '%s' "$$PK" | wc -c | tr -d '[:space:]'); \
+		if [ "$$PK_LEN" -ne 66 ]; then \
+			printf "$(RED)Error: Invalid private key length (got $$PK_LEN chars, expected 66 with 0x).$(RESET)\n"; \
+			exit 1; \
+		fi; \
 		grep -v '^SETTLER_PK=' .env > .env.tmp && mv .env.tmp .env; \
-		echo "SETTLER_PK=\"$$PK_INPUT\"" >> .env; \
+		printf 'SETTLER_PK="%s"\n' "$$PK" >> .env; \
 	fi; \
-	set -a; source .env; set +a; \
-	if [ -z "$$PAYEE" ] || [[ "$$PAYEE" == *"<"* ]] || [[ "$$PAYEE" == *"RECIPIENT"* ]]; then \
-		DEFAULT_PAYEE=$$(cast wallet address --private-key "$$SETTLER_PK"); \
-		grep -v '^PAYEE=' .env > .env.tmp && mv .env.tmp .env; \
-		echo "PAYEE=\"$$DEFAULT_PAYEE\"" >> .env; \
+	WALLET_ADDR=$$(cast wallet address --private-key "$$PK" 2>/dev/null || true); \
+	PAYEE_CLEAN=$$(printf '%s' "$$PAYEE" | tr -d '[:space:]'); \
+	PAYEE_LEN=$$(printf '%s' "$$PAYEE_CLEAN" | wc -c | tr -d '[:space:]'); \
+	if [ -z "$$PAYEE_CLEAN" ] || [ "$$PAYEE_LEN" -ne 42 ]; then \
+		if [ -r /dev/tty ]; then \
+			printf "$(CYAN)Enter PAYEE address [Press Enter for $$WALLET_ADDR]: $(RESET)" > /dev/tty; \
+			IFS= read -r INPUT_PAYEE < /dev/tty; \
+			INPUT_PAYEE=$$(printf '%s' "$$INPUT_PAYEE" | tr -d '[:space:]'); \
+			FINAL_PAYEE="$${INPUT_PAYEE:-$$WALLET_ADDR}"; \
+		else \
+			FINAL_PAYEE="$$DEFAULT_PAYEE"; \
+		fi; \
+		if [ -n "$$FINAL_PAYEE" ]; then \
+			grep -v '^PAYEE=' .env > .env.tmp && mv .env.tmp .env; \
+			printf 'PAYEE="%s"\n' "$$FINAL_PAYEE" >> .env; \
+		fi; \
 	fi; \
-	if [ -z "$$AMOUNT" ] && [ -z "$(CLI_AMOUNT)" ]; then \
-		read -rp "Enter tUSD8 AMOUNT in base units [default: 100]: " AMT_INPUT; \
-		echo "AMOUNT=\"$${AMT_INPUT:-100}\"" >> .env; \
-	fi; \
-	if [ -z "$$NONCE" ] && [ -z "$(CLI_NONCE)" ]; then \
-		read -rp "Enter payment NONCE [default: 1]: " NONCE_INPUT; \
-		echo "NONCE=\"$${NONCE_INPUT:-1}\"" >> .env; \
+	if [ -z "$$_PQAUTH_AMT_ASKED" ] && [ -r /dev/tty ]; then \
+		TUSD8_BAL=$$(cast call "$$TUSD8_ADDR" "balanceOf(address)(uint256)" "$$WALLET_ADDR" --rpc-url "$$QDAY_RPC" 2>/dev/null | awk '{print $$1}'); \
+		DEFAULT_AMT=$$(printf '%s' "$$AMOUNT" | tr -d '[:space:]'); \
+		case "$$DEFAULT_AMT" in ''|*[!0-9]*) DEFAULT_AMT="50" ;; esac; \
+		if [ "$$DEFAULT_AMT" -le 0 ]; then DEFAULT_AMT="50"; fi; \
+		if [ -n "$$TUSD8_BAL" ] && [ "$$TUSD8_BAL" -gt 0 ] && [ "$$DEFAULT_AMT" -gt "$$TUSD8_BAL" ]; then \
+			DEFAULT_AMT="$$TUSD8_BAL"; \
+		fi; \
+		while true; do \
+			printf "$(CYAN)Enter AMOUNT in tUSD8 base units (Available: $${TUSD8_BAL:-unknown}) [Press Enter for $$DEFAULT_AMT]: $(RESET)" > /dev/tty; \
+			IFS= read -r INPUT_AMT < /dev/tty; \
+			INPUT_AMT=$$(printf '%s' "$$INPUT_AMT" | tr -d '[:space:]'); \
+			FINAL_AMT="$${INPUT_AMT:-$$DEFAULT_AMT}"; \
+			case "$$FINAL_AMT" in \
+				''|*[!0-9]*) \
+					printf "$(RED)Error: AMOUNT must be a positive integer.$(RESET)\n" > /dev/tty; \
+					continue ;; \
+			esac; \
+			if [ "$$FINAL_AMT" -le 0 ]; then \
+				printf "$(RED)Error: AMOUNT must be greater than 0.$(RESET)\n" > /dev/tty; \
+				continue; \
+			fi; \
+			if [ -n "$$TUSD8_BAL" ] && [ "$$FINAL_AMT" -gt "$$TUSD8_BAL" ]; then \
+				printf "$(RED)Error: AMOUNT ($$FINAL_AMT) exceeds your available tUSD8 balance ($$TUSD8_BAL).$(RESET)\n" > /dev/tty; \
+				continue; \
+			fi; \
+			break; \
+		done; \
+		grep -v '^AMOUNT=' .env > .env.tmp && mv .env.tmp .env; \
+		printf 'AMOUNT="%s"\n' "$$FINAL_AMT" >> .env; \
 	fi
+export _PQAUTH_AMT_ASKED := 1
 
 build: ## Compile ForgeLattice Go CLI and PaymentGate.sol (Shanghai EVM)
 	@printf "$(CYAN)=== Building ForgeLattice CLI ($(BINARY)) ===$(RESET)\n"
@@ -130,7 +177,7 @@ verify: check-env ## Verify sig.json off-chain against keypair.json and on-chain
 		"$$PAYEE" "$$AMOUNT" "$$NONCE" --rpc-url "$$QDAY_RPC"); \
 	PQ_PUB_KEY=$$(jq -r '.public_key' keypair.json); \
 	SIGNATURE=$$(jq -r '.signature' sig.json); \
-	printf "$(CYAN)=== [Stage 6] Verifying Valid Original ML-DSA-$(LEVEL) Verification (sig.json) ===$(RESET)\n"; \
+	printf "$(CYAN)=== [Stage 6] Verifying Valid Original ML-DSA-$(LEVEL) Signature (sig.json) ===$(RESET)\n"; \
 	./$(BINARY) verify --pubKey "$$PQ_PUB_KEY" --signature "$$SIGNATURE" --message "$$AUTH_HASH" --level $(LEVEL)
 
 settle: verify ## Verify off-chain and settle tUSD8 on-chain via PaymentGate.release()
